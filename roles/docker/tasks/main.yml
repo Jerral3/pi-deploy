@@ -1,0 +1,37 @@
+- name: Install pip, python-dev package with apt
+  apt:
+    pkg: "{{ item }}"
+    state: latest
+    update_cache: yes
+    cache_valid_time: 600
+  with_items:
+    - python-dev
+    - python-pip
+    - python-apt
+    - python-apt-common
+
+- name: install custom repository
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+  with_items:
+    - "deb https://packagecloud.io/Hypriot/Schatzkiste/raspbian/ jessie main"
+    - "deb-src https://packagecloud.io/Hypriot/Schatzkiste/raspbian/ jessie main"
+
+- name: be sure docker deamon is installed
+  apt: name=docker-hypriot state=present
+  tags: docker
+
+- name: Upgrade latest pip, setuptools, docker-py and docker-compose with pip
+  pip:
+    name: "{{ item.name }}"
+    state: latest
+  with_items:
+    - { name: pip, version: "latest", install: true }
+    - { name: setuptools, version: "latest", install: true }
+    - { name: docker, version: "latest", install: true }
+    - { name: docker-compose, version: "latest", install: true }
+
+- name: be sure docker deamon is up and running
+  service: name=docker state=started
+  tags: docker

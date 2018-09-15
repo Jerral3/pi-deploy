@@ -1,0 +1,5 @@
+ftp_container: pure_ftpd
+ftp_user_home: /home/ftpusers
+
+ftp_host_port: 21
+ftp_host_port_range: "30000-30009"

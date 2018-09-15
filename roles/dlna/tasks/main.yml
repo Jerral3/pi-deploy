@@ -1,0 +1,30 @@
+- name: Creates directory
+  file:
+    path: "{{ dlna_local_folder }}"
+    state: directory
+
+- name: copy dlna compose file
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ dlna_local_folder }}/docker-compose.yml"
+  tags: dlna
+
+- name: copy dlna Dockerfile
+  template:
+    src: Dockerfile.j2
+    dest: "{{ dlna_local_folder }}/Dockerfile"
+  tags: dlna
+
+- name: copy dlna configuration file
+  template:
+    src: minidlna.conf.j2
+    dest: "{{ dlna_local_folder }}/minidlna.conf"
+  tags: dlna
+
+- name: build container
+  docker_service:
+    project_src: "{{ dlna_local_folder }}"
+    recreate: smart
+    remove_orphans: yes
+    build: yes
+    state: present

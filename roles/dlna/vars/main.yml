@@ -1,0 +1,5 @@
+dlna_local_folder: "{{ local_folder }}/dlna"
+dlna_data_host_folder: "{{ data_folder }}/FTP/Videos"
+dlna_config_host_folder: "{{ config_folder }}/dlna"
+
+dlna_friendly_name: "Jerral Video"

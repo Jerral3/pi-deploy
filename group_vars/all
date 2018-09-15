@@ -1,0 +1,3 @@
+local_folder: /home/pi/docker
+data_folder: /media/hdd
+config_folder: "{{ data_folder }}/config"

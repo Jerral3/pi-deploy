@@ -1,0 +1,4 @@
+dlna_container: minidlna
+dlna_host_port: 8200
+dlna_interface: wlan0
+dlna_friendly_name: "Videos"

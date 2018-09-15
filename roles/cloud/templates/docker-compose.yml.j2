@@ -1,0 +1,29 @@
+version: '2'
+services:
+    db:
+        image: "{{ cloud_sql_image }}"
+        container_name: "{{ cloud_sql_container }}"
+        hostname: "{{ cloud_sql_container }}"
+        ports:
+            - "{{ cloud_sql_host_port }}:3306"
+        volumes:
+            - "{{ cloud_sql_host_folder }}:/var/lib/mysql"
+        restart: always
+        environment:
+            - "MYSQL_ROOT_PASSWORD={{ cloud_sql_root_password }}"
+            - "MYSQL_PASSWORD={{ cloud_sql_password }}"
+            - "MYSQL_DATABASE={{ cloud_sql_database }}"
+            - "MYSQL_USER={{ cloud_sql_user }}"
+    nextcloud:
+        container_name: "{{ cloud_container }}"
+        image: "{{ cloud_image }}"
+        ports:
+            - "{{ cloud_http_host_port }}:80"
+            - "{{ cloud_https_host_port }}:443"
+        volumes:
+            - "{{ cloud_data_host_folder }}:/var/www/html"
+        environment:
+            - MYSQL_HOST=db
+        depends_on:
+            - db
+        restart: always

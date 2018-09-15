@@ -1,0 +1,12 @@
+- name: create directory
+  file:
+    path: "{{ cloud_local_folder }}"
+    state: directory
+  tags: cloud
+
+- name: copy nextcloud compose file
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ cloud_local_folder }}/docker-compose.yml"
+  notify: start cloud
+  tags: cloud

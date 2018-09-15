@@ -1,0 +1,29 @@
+- name: Creates directory
+  file:
+    path: "{{ ftp_local_folder }}"
+    state: directory
+
+- name: copy ftp compose file
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ ftp_local_folder }}/docker-compose.yml"
+  tags: ftp
+
+- name: copy ftp Dockerfile
+  template:
+    src: Dockerfile.j2
+    dest: "{{ ftp_local_folder }}/Dockerfile"
+  tags: ftp
+
+- name: copy ftp entrypoint
+  template:
+    src: run.sh.j2
+    dest: "{{ ftp_local_folder }}/run.sh"
+  tags: ftp
+
+- name: build container
+  docker_service:
+    project_src: "{{ ftp_local_folder }}"
+    recreate: smart
+    build: yes
+    state: present

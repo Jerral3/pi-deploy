@@ -1,0 +1,12 @@
+version: '2'
+services:
+    dlna_server:
+        container_name: "{{ dlna_container }}"
+        build: .
+        ports:
+            - "{{ dlna_host_port }}:8200"
+        volumes:
+            - "{{ dlna_data_host_folder }}:/media"
+            - "{{ dlna_config_host_folder }}:/etc/pure-ftpd/passwd"
+        restart: always
+        network_mode: host

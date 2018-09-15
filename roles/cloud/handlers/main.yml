@@ -1,0 +1,7 @@
+- name: start cloud
+  docker_service:
+    project_src: "{{ cloud_local_folder }}"
+    recreate: smart
+    build: true
+    remove_orphans: true
+    state: present

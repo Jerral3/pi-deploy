@@ -1,0 +1,11 @@
+cloud_image: nextcloud
+cloud_container: nextcloud
+
+cloud_http_host_port: 8080
+cloud_https_host_port: 8043
+
+cloud_sql_image: hypriot/rpi-mysql
+cloud_sql_container: mariadb
+cloud_sql_user: nextcloud
+cloud_sql_database: nextcloud
+cloud_sql_host_port: 3306

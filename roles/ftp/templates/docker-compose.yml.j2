@@ -1,0 +1,20 @@
+version: '2'
+services:
+    ftpd_server:
+        container_name: "{{ ftp_container }}"
+        build: .
+        ports:
+            - "{{ ftp_host_port }}:21"
+            - "{{ ftp_host_port_range }}:30000-30009"
+        volumes:
+            - "{{ ftp_data_host_folder }}:{{ ftp_user_home }}"
+            - "{{ ftp_config_host_folder }}:/etc/pure-ftpd/passwd"
+        environment:
+            - PUBLICHOST="{{ ansible_wlan0.ipv4.address }}"
+            - "FTP_USER_HOME={{ ftp_user_home }}"
+            - "FTP_USER_NAME={{ ftp_user }}"
+            - "FTP_USER_PASS={{ ftp_password }}"
+            - FTP_USER_UID={{ ftp_user_uid }}
+            - FTP_USER_GID=1000
+        restart: always
+        network_mode: host
